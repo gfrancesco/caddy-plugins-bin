@@ -19,10 +19,6 @@ jobs:
     with:
       output: local
       artifact-upload: true
-      artifact-name: build-caddy-bin
-      platforms: >-
-        linux/amd64,
-        linux/arm64/v8
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
@@ -30,3 +26,5 @@ jobs:
         ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
         CADDY_VERSION=${{ vars.CADDY_VERSION }}
         CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
+      artifact-name: build-caddy-bin
+      platforms: linux/amd64,linux/arm64/v8
