@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   build:
+    name: Release binaries
+    runs-on: ubuntu-latest
     permissions:
       contents: read # to fetch the repository content
       id-token: write # for signing attestation(s) with GitHub OIDC Token
