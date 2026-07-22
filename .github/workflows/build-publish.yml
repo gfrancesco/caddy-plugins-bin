@@ -1,0 +1,32 @@
+name: ci/cd
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: docker/github-builder/.github/workflows/build.yml@v1
+    permissions:
+      contents: read # to fetch the repository content
+      id-token: write # for signing attestation(s) with GitHub OIDC Token
+    with:
+      output: local
+      artifact-upload: true
+      artifact-name: build-caddy-bin
+      platforms: >-
+        linux/amd64,
+        linux/arm64/v8
+      file: caddy-plugins.Dockerfile
+      build-args: |
+        GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
+        XCADDY_VERSION=${{ vars.XCADDY_VERSION }}
+        ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
+        CADDY_VERSION=${{ vars.CADDY_VERSION }}
+        CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
