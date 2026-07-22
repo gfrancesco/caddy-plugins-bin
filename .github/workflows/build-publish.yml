@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   build:
-    uses: docker/github-builder/.github/workflows/build.yml@v1
     permissions:
       contents: read # to fetch the repository content
       id-token: write # for signing attestation(s) with GitHub OIDC Token
