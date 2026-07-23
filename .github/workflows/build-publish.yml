@@ -48,11 +48,11 @@ jobs:
       with:
         path: ~/artifacts
         name: build-caddy-bin
-    # - name: Display structure of downloaded files
-      # run: ls -R ~
+    - name: Display structure of downloaded files
+      run: ls -R artifacts
     - uses: softprops/action-gh-release@v3
       with:
-        working_directory: /home/runner/artifacts
+        working_directory: artifacts
         files: |
           linux_amd64/usr/bin/caddy
           linux_arm64/usr/bin/caddy
