@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    name: Release binaries
+    name: Build containers
     runs-on: ubuntu-latest
     permissions:
       contents: read # to fetch the repository content
@@ -34,7 +34,14 @@ jobs:
           ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
           CADDY_VERSION=${{ vars.CADDY_VERSION }}
           CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
-    - uses: ncipollo/release-action@v1
+
+  release:
+    needs: build
+    name: Create release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # for signing attestation(s) with GitHub OIDC Token
+    steps:
+    - uses: softprops/action-gh-release@v3
       with:
-        artifacts: "*"
-        tag: ${{ github.ref }}
+        files: "*"
