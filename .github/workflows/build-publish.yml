@@ -52,7 +52,7 @@ jobs:
       # run: ls -R ~
     - uses: softprops/action-gh-release@v3
       with:
-        working_directory: ~/artifacts
+        working_directory: /home/runner/artifacts
         files: |
           linux_amd64/usr/bin/caddy
           linux_arm64/usr/bin/caddy
