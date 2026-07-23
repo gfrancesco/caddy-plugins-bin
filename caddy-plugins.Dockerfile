@@ -21,6 +21,7 @@ ARG CADDY_VERSION
 
 # Configures xcaddy to not clean up post-build (unnecessary in a container)
 ENV XCADDY_SKIP_CLEANUP=1
+
 # Sets capabilities for output caddy binary to be able to bind to privileged ports
 ENV XCADDY_SETCAP=1
 
