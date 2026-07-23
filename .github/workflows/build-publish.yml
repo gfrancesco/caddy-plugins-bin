@@ -44,6 +44,10 @@ jobs:
     permissions:
       contents: write # for signing attestation(s) with GitHub OIDC Token
     steps:
+    - uses: actions/download-artifact@v8
+      with:
+        path: artifacts
+        name: build-caddy-bin
     - uses: softprops/action-gh-release@v3
       with:
-        files: "*"
+        files: "artifacts/*"
