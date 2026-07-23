@@ -44,13 +44,14 @@ RUN set -eux; \
         s390x)   binArch='s390x' ;; \
         *) echo >&2 "error: unsupported architecture ($apkArch)"; exit 1 ;;\
     esac; \
-    wget -O /tmp/xcaddy.tar.gz "https://github.com/caddyserver/xcaddy/releases/download/v${XCADDY_VERSION}/xcaddy_${XCADDY_VERSION}_linux_${binArch}.tar.gz"; \
-    tar x -z -f /tmp/xcaddy.tar.gz -C /usr/bin xcaddy; \
-    rm -f /tmp/xcaddy.tar.gz; \
-    chmod +x /usr/bin/xcaddy;
+    # wget -O /tmp/xcaddy.tar.gz "https://github.com/caddyserver/xcaddy/releases/download/v${XCADDY_VERSION}/xcaddy_${XCADDY_VERSION}_linux_${binArch}.tar.gz"; \
+    # tar x -z -f /tmp/xcaddy.tar.gz -C /usr/bin xcaddy; \
+    # rm -f /tmp/xcaddy.tar.gz; \
+    # chmod +x /usr/bin/xcaddy;
+    go install github.com/caddyserver/xcaddy/cmd/xcaddy@v${XCADDY_VERSION}
 
 WORKDIR /usr/bin
-
+RUN xcaddy version
 RUN xcaddy build ${CADDY_VERSION} \
     --with github.com/caddy-dns/cloudflare@${CADDY_CF_DNS_VERSION}
 

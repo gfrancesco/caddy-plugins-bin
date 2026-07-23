@@ -21,13 +21,13 @@ jobs:
       artifact-name: build-caddy-bin
       sign: false
       platforms: >-
-        linux/amd64,
-        linux/arm64/v8,
-        linux/arm/v7,
-        linux/arm/v6,
-        linux/ppc64le,
-        linux/riscv64,
-        linux/s390x
+        linux/amd64
+        # linux/arm64/v8,
+        # linux/arm/v7,
+        # linux/arm/v6,
+        # linux/ppc64le,
+        # linux/riscv64,
+        # linux/s390x
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
@@ -55,6 +55,11 @@ jobs:
         ls -lh artifacts
         mv artifacts/linux_amd64/usr/bin/caddy caddy-plugins-bin_amd64-${{ github.ref_name }}
         mv artifacts/linux_arm64/usr/bin/caddy caddy-plugins-bin_arm64-${{ github.ref_name }}
+        mv artifacts/linux_arm_v6/usr/bin/caddy caddy-plugins-bin_arm_v6-${{ github.ref_name }}
+        mv artifacts/linux_arm_v7/usr/bin/caddy caddy-plugins-bin_arm_v7-${{ github.ref_name }}
+        mv artifacts/linux_ppc64le/usr/bin/caddy caddy-plugins-bin_ppc64le-${{ github.ref_name }}
+        mv artifacts/linux_riscv64/usr/bin/caddy caddy-plugins-bin_riscv64-${{ github.ref_name }}
+        mv artifacts/linux_s390x/usr/bin/caddy caddy-plugins-bin_s390x-${{ github.ref_name }}
     - name: Release
       uses: softprops/action-gh-release@v3
       with:
