@@ -49,7 +49,7 @@ jobs:
         path: "~/artifacts"
         name: build-caddy-bin
     - name: Display structure of downloaded files
-      run: ls -R "~"
+      run: ls -R "/home/runner"
     - uses: softprops/action-gh-release@v3
       with:
-        files: "~/artifacts/*"
+        files: "/home/runner/artifacts/*"
