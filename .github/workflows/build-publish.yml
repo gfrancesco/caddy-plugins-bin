@@ -13,7 +13,6 @@ permissions:
 jobs:
   build:
     name: Build containers
-    runs-on: ubuntu-latest
     permissions:
       contents: read # to fetch the repository content
       id-token: write # for signing attestation(s) with GitHub OIDC Token
