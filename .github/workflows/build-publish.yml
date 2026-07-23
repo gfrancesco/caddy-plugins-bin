@@ -46,8 +46,10 @@ jobs:
     steps:
     - uses: actions/download-artifact@v8
       with:
-        path: artifacts
+        path: "~/artifacts"
         name: build-caddy-bin
+    - name: Display structure of downloaded files
+      run: ls -R "~"
     - uses: softprops/action-gh-release@v3
       with:
-        files: "artifacts/*"
+        files: "~/artifacts/*"
