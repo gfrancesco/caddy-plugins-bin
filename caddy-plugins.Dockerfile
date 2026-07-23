@@ -16,6 +16,9 @@ FROM golang:${GO_IMAGE_VERSION} AS builder
 ARG XCADDY_VERSION
 ARG CADDY_CF_DNS_VERSION
 
+# Used by xcaddy to select which version of Caddy to build
+ARG CADDY_VERSION
+
 # Configures xcaddy to not clean up post-build (unnecessary in a container)
 ENV XCADDY_SKIP_CLEANUP=1
 # Sets capabilities for output caddy binary to be able to bind to privileged ports
@@ -47,7 +50,7 @@ RUN set -eux; \
 
 WORKDIR /usr/bin
 
-RUN xcaddy build \
+RUN xcaddy build ${CADDY_VERSION} \
     --with github.com/caddy-dns/cloudflare@${CADDY_CF_DNS_VERSION}
 
 
