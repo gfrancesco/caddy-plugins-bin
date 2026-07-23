@@ -49,11 +49,12 @@ jobs:
         path: artifacts
         name: build-caddy-bin
     - name: Display structure of downloaded files
-      run: pwd
+      run: |
+        mv artifacts/linux_amd64/usr/bin/caddy caddy-plugins-bin_amd64-${{ github.ref_name }}
+        mv artifacts/linux_arm64/usr/bin/caddy caddy-plugins-bin_arm64-${{ github.ref_name }}
     - uses: softprops/action-gh-release@v3
       with:
-        working_directory: artifacts
+        # working_directory: artifacts
         files: |
-          linux_amd64/usr/bin/caddy
-          linux_arm64/usr/bin/caddy
+          caddy-plugins-bin*
 
