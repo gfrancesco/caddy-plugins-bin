@@ -5,7 +5,11 @@ name: ci/cd
 # separate terms of service, privacy policy, and support
 # documentation.
 
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+  workflow_dispatch
 
 permissions:
   contents: read
