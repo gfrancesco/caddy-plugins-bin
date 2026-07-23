@@ -9,12 +9,14 @@ ARG ALPINE_VERSION
 ARG CADDY_VERSION
 # https://github.com/caddy-dns/cloudflare/tags
 ARG CADDY_CF_DNS_VERSION
-
+# https://github.com/mholt/caddy-l4/tags
+ARG CADDY_L4_VERSION
 
 FROM golang:${GO_IMAGE_VERSION} AS builder
 
 ARG XCADDY_VERSION
 ARG CADDY_CF_DNS_VERSION
+ARG CADDY_L4_VERSION
 
 # Used by xcaddy to select which version of Caddy to build
 ARG CADDY_VERSION
@@ -54,7 +56,7 @@ WORKDIR /usr/bin
 RUN xcaddy version
 RUN xcaddy build ${CADDY_VERSION} \
     --with github.com/caddy-dns/cloudflare@${CADDY_CF_DNS_VERSION} \
-    --with github.com/mholt/caddy-l4
+    --with github.com/mholt/caddy-l4@${CADDY_L4_VERSION}
 
 
 

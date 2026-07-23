@@ -52,7 +52,6 @@ jobs:
         name: build-caddy-bin
     - name: Rename binaries for release
       run: |
-        ls -lh artifacts
         mv artifacts/linux_amd64/usr/bin/caddy caddy-plugins-bin_amd64-${{ github.ref_name }}
         mv artifacts/linux_arm64/usr/bin/caddy caddy-plugins-bin_arm64-${{ github.ref_name }}
         mv artifacts/linux_arm_v6/usr/bin/caddy caddy-plugins-bin_arm_v6-${{ github.ref_name }}
