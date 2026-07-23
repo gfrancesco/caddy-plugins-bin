@@ -77,14 +77,14 @@ RUN --mount=target=/tmp/builder,from=builder,source=/usr/bin cp /tmp/builder/cad
     chmod 1777 /config/caddy /data/caddy; \
     setcap cap_net_bind_service=+ep /usr/bin/caddy; \
     chmod +x /usr/bin/caddy; \
-    wget -O /etc/caddy/Caddyfile "https://raw.githubusercontent.com/caddyserver/dist/refs/tags/v${CADDY_VERSION}/config/Caddyfile"; \
-    wget -O /usr/share/caddy/index.html "https://raw.githubusercontent.com/caddyserver/dist/refs/tags/v${CADDY_VERSION}/welcome/index.html"
+    wget -O /etc/caddy/Caddyfile "https://raw.githubusercontent.com/caddyserver/dist/refs/tags/${CADDY_VERSION}/config/Caddyfile"; \
+    wget -O /usr/share/caddy/index.html "https://raw.githubusercontent.com/caddyserver/dist/refs/tags/${CADDY_VERSION}/welcome/index.html"
 
 # See https://caddyserver.com/docs/conventions#file-locations for details
 ENV XDG_CONFIG_HOME=/config
 ENV XDG_DATA_HOME=/data
 
-LABEL org.opencontainers.image.version=v${CADDY_VERSION}
+LABEL org.opencontainers.image.version=${CADDY_VERSION}
 LABEL org.opencontainers.image.title=Caddy
 LABEL org.opencontainers.image.description="multi platform linux images for Caddy with custom plugin(s)"
 LABEL org.opencontainers.image.url=https://caddyserver.com

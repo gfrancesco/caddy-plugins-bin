@@ -1,15 +1,9 @@
 name: ci/cd
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 on:
   push:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,33 +22,42 @@ jobs:
       sign: false
       platforms: >-
         linux/amd64,
-        linux/arm64/v8
+        linux/arm64/v8,
+        linux/arm/v7,
+        linux/arm/v6,
+        linux/ppc64le,
+        linux/riscv64,
+        linux/s390x
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
         XCADDY_VERSION=${{ vars.XCADDY_VERSION }}
         ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
         CADDY_VERSION=${{ vars.CADDY_VERSION }}
+        # CADDY_VERSION=${{ github.ref_name }}
         CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
 
   release:
     needs: build
+    if: github.ref_type == 'tag'
     name: Create release
     runs-on: ubuntu-latest
     permissions:
       contents: write # for signing attestation(s) with GitHub OIDC Token
     steps:
-    - uses: actions/download-artifact@v8
+    - name: Download artifacts
+      uses: actions/download-artifact@v8
       with:
         path: artifacts
         name: build-caddy-bin
-    - name: Display structure of downloaded files
+    - name: Rename binaries for release
       run: |
+        ls -lh artifacts
         mv artifacts/linux_amd64/usr/bin/caddy caddy-plugins-bin_amd64-${{ github.ref_name }}
         mv artifacts/linux_arm64/usr/bin/caddy caddy-plugins-bin_arm64-${{ github.ref_name }}
-    - uses: softprops/action-gh-release@v3
+    - name: Release
+      uses: softprops/action-gh-release@v3
       with:
-        # working_directory: artifacts
         files: |
           caddy-plugins-bin*
 
