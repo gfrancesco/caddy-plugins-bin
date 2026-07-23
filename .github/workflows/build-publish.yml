@@ -21,7 +21,13 @@ jobs:
       artifact-name: build-caddy-bin
       sign: false
       platforms: >-
-        linux/amd64
+        linux/amd64,
+        linux/arm64/v8,
+        linux/arm/v7,
+        linux/arm/v6,
+        linux/ppc64le,
+        linux/riscv64,
+        linux/s390x
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
