@@ -47,10 +47,10 @@ jobs:
         name: build-caddy-bin
     - name: Rename binaries for release
       run: |
-        arr_folders=(artifacts/linux_*)
+        arr_folders=(artifacts/*)
         for i in "${arr_folders[@]}"
         do :
-           MV_CMD="mv artifacts/linux_$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"
+           MV_CMD="mv artifacts/$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"
            "$("${MV_CMD}")"
         done
     - name: Release

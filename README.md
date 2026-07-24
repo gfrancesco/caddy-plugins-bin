@@ -1,7 +1,10 @@
 # What's this?
 
-Dockerfile source for multi platform linux [Caddy](https://caddyserver.com/) docker images published at [gfrancesco11/caddy-plugins](https://hub.docker.com/r/gfrancesco11/caddy-plugins).
-The images include the [Cloudflare DNS Caddy module](https://caddyserver.com/docs/modules/dns.providers.cloudflare).
+Dockerfile source for multi platform linux [Caddy](https://caddyserver.com/) docker images published on Docker HUB at [gfrancesco11/caddy-plugins](https://hub.docker.com/r/gfrancesco11/caddy-plugins).
+For each build, Caddy binaries are published under releases. Binaries can be used to add plugin funcionalities to existing installs, e.g. when Caddy is installed on [Home Assistant as an App](https://github.com/einschmidt/app-caddy-2).
+The images include the following plugins:
+
+- [Cloudflare DNS Caddy module](https://caddyserver.com/docs/modules/dns.providers.cloudflare).
 
 # Architectures
 
