@@ -22,7 +22,12 @@ jobs:
       sign: false
       platforms: >-
         linux/amd64,
-        linux/arm64/v8
+        linux/arm64/v8,
+        linux/arm/v7,
+        linux/arm/v6,
+        linux/ppc64le,
+        linux/riscv64,
+        linux/s390x
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
@@ -48,7 +53,6 @@ jobs:
     - name: Rename binaries for release
       run: |
         arr_folders=(artifacts/*)
-        ls -R artifacts/*
         for i in "${arr_folders[@]}"
         do :
            MV_CMD="artifacts/$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"
