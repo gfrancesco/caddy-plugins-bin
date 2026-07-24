@@ -56,18 +56,18 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v3
       with:
+        name: "Caddy ${{ github.ref_name }}"
         files: |
           caddy-plugins-bin*
         body: |
-          # Caddy: `${{ github.ref_name }}`
           ## Plugins
           - Cloudflare DNS @ ${{ vars.CADDY_CF_DNS_VERSION }}
           - Layer 4 @ ${{ vars.CADDY_L4_VERSION }}
 
-          # Images
+          ## Images
           [Docker HUB: gfrancesco11/caddy-plugins](https://hub.docker.com/r/gfrancesco11/caddy-plugins/tags)
 
-          # Build and image dependencies
+          ## Build and image dependencies
           - `alpine:${{ vars.ALPINE_VERSION }}`
           - `golang:${{ vars.GO_IMAGE_VERSION }}`
           - `github.com/caddyserver/xcaddy:${{ vars.XCADDY_VERSION }}`
