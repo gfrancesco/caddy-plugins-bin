@@ -51,8 +51,8 @@ jobs:
         ls -R artifacts/*
         for i in "${arr_folders[@]}"
         do :
-           MV_CMD="mv artifacts/$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"
-           "$("${MV_CMD}")"
+           MV_CMD="artifacts/$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"
+           mv ${MV_CMD}
         done
     - name: Release
       uses: softprops/action-gh-release@v3
