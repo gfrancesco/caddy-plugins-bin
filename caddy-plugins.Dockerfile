@@ -58,6 +58,8 @@ RUN xcaddy build ${CADDY_VERSION} \
     --with github.com/caddy-dns/cloudflare@${CADDY_CF_DNS_VERSION} \
     --with github.com/mholt/caddy-l4@${CADDY_L4_VERSION}
 
+RUN caddy list-modules
+
 
 
 ### second stage for dist image
