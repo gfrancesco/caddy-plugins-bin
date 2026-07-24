@@ -56,7 +56,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v3
       with:
-        name: "Caddy ${{ github.ref_name }}"
         files: |
           caddy-plugins-bin*
         body: |

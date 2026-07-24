@@ -7,7 +7,7 @@ Releases and images tags/versions follow the Caddy version numbers.
 Images and binaries include the following plugins:
 
 - [Cloudflare DNS](https://caddyserver.com/docs/modules/dns.providers.cloudflare)
-- [Layer-4](https://github.com/mholt/caddy-l4)
+- [Layer-4](https://caddyserver.com/docs/modules/layer4)
 
 # Architectures
 
@@ -36,7 +36,5 @@ This is how to build containers and artifacts after updates to the actions, dock
 
 - create and populate the env variables used in the dockerfile under repository `Settings`
 - update the dockerfile, commit and push any change: `git commit -am "UPD: dockerfile"`, `git push`
-- to trigger a rebuild via github actions you need to create a tag in the `vNN.NN.NN*` format and push it, e.g.: `git tag v2.11.4`
+- to trigger a rebuild via github actions you need to create a tag in the `vNN.NN.NN*` format, e.g.: `git tag v2.11.4`
 - tags need to be pushed for the action to start `git push --tags`
-
-
