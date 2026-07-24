@@ -53,7 +53,7 @@ RUN set -eux; \
     go install github.com/caddyserver/xcaddy/cmd/xcaddy@${XCADDY_VERSION}
 
 WORKDIR /usr/bin
-RUN xcaddy version
+RUN echo ${CADDY_VERSION}
 RUN xcaddy build ${CADDY_VERSION} \
     --with github.com/caddy-dns/cloudflare@${CADDY_CF_DNS_VERSION} \
     --with github.com/mholt/caddy-l4@${CADDY_L4_VERSION}

@@ -5,12 +5,27 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
 
+env:
+  caddy_v_num: ${{ github.ref_name }}
+
 permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build containers
+  set-env-caddy-v:
+    name: Set numeric only Caddy version variable
+    runs-on: ubuntu-latest
+    outputs:
+      out1: ${{ steps.step1.outputs.caddy_v_num }}
+    steps:
+      -id: step1
+       run: echo "caddy_v_num=${env.caddy_v_num#v}" >> "$GITHUB_OUTPUT"
+
+  build-local:
+    name: Build local files
+    needs: set-env-caddy-v
+    env:
+      caddy_v_num_l: ${{ needs.set-env-caddy-v.outputs.out1 }}
     permissions:
       contents: read # to fetch the repository content
       id-token: write # for signing attestation(s) with GitHub OIDC Token
@@ -27,13 +42,46 @@ jobs:
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
         XCADDY_VERSION=${{ vars.XCADDY_VERSION }}
         ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
-        CADDY_VERSION=${{ vars.CADDY_VERSION }}
-        # CADDY_VERSION=${{ github.ref_name }}
+        CADDY_VERSION=${{ env.caddy_v_num_l }}
         CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
         CADDY_L4_VERSION=${{ vars.CADDY_L4_VERSION }}
 
+  # build-images:
+  #   name: Build dockerhub images
+  #   permissions:
+  #     contents: read # to fetch the repository content
+  #     id-token: write # for signing attestation(s) with GitHub OIDC Token
+  #   uses: docker/github-builder/.github/workflows/build.yml@v1
+  #   with:
+  #     output: image
+  #     platforms: >-
+  #       linux/amd64,
+  #       linux/arm64/v8,
+  #       linux/arm/v7,
+  #       linux/arm/v6,
+  #       linux/ppc64le,
+  #       linux/riscv64,
+  #       linux/s390x
+  #     file: caddy-plugins.Dockerfile
+  #     build-args: |
+  #       GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
+  #       XCADDY_VERSION=${{ vars.XCADDY_VERSION }}
+  #       ALPINE_VERSION=${{ vars.ALPINE_VERSION }}
+  #       CADDY_VERSION=${{ github.ref_name }}
+  #       CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
+  #       CADDY_L4_VERSION=${{ vars.CADDY_L4_VERSION }}
+  #     push: true
+  #     meta-images: gfrancesco11/caddy-plugins
+  #     meta-tags: |
+  #       type=semver,pattern={{version}},value=${{ vars.CADDY_VERSION }}
+  #   secrets:
+  #     registry-auths: |
+  #       - registry: docker.io
+  #         username: ${{ vars.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
   release:
-    needs: build
+    needs: build-local
     if: github.ref_type == 'tag'
     name: Create release
     runs-on: ubuntu-latest
@@ -60,8 +108,8 @@ jobs:
           caddy-plugins-bin*
         body: |
           ## Plugins
-          - Cloudflare DNS @ ${{ vars.CADDY_CF_DNS_VERSION }}
-          - Layer 4 @ ${{ vars.CADDY_L4_VERSION }}
+          - Cloudflare DNS @ `${{ vars.CADDY_CF_DNS_VERSION }}`
+          - Layer 4 @ `${{ vars.CADDY_L4_VERSION }}`
 
           ## Images
           [Docker HUB: gfrancesco11/caddy-plugins](https://hub.docker.com/r/gfrancesco11/caddy-plugins/tags)
