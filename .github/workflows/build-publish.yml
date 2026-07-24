@@ -5,9 +5,6 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
 
-env:
-  caddy_v_num: ${{ github.ref_name }}
-
 permissions:
   contents: read
 
@@ -15,11 +12,13 @@ jobs:
   set-env-caddy-v:
     name: Set numeric only Caddy version variable
     runs-on: ubuntu-latest
+    env:
+      caddy_v_num: ${{ github.ref_name }}
     outputs:
       out1: ${{ steps.step1.outputs.caddy_v_num }}
     steps:
-      -id: step1
-       run: echo "caddy_v_num=${env.caddy_v_num#v}" >> "$GITHUB_OUTPUT"
+    -name: step1
+     run: echo "caddy_v_num=${caddy_v_num:1}" >> "$GITHUB_OUTPUT"
 
   build-local:
     name: Build local files
