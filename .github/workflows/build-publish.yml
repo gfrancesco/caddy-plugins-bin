@@ -48,6 +48,7 @@ jobs:
     - name: Rename binaries for release
       run: |
         arr_folders=(artifacts/*)
+        ls -R artifacts/*
         for i in "${arr_folders[@]}"
         do :
            MV_CMD="mv artifacts/$(echo $i | cut -c 11-)/usr/bin/caddy caddy-plugins-bin-$(echo $i | cut -c 11-)-${{ github.ref_name }}"

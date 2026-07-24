@@ -4,7 +4,8 @@ Dockerfile source for multi platform linux [Caddy](https://caddyserver.com/) doc
 For each build, Caddy binaries are published under releases. Binaries can be used to add plugin funcionalities to existing installs, e.g. when Caddy is installed on [Home Assistant as an App](https://github.com/einschmidt/app-caddy-2).
 The images include the following plugins:
 
-- [Cloudflare DNS Caddy module](https://caddyserver.com/docs/modules/dns.providers.cloudflare).
+- [Cloudflare DNS](https://caddyserver.com/docs/modules/dns.providers.cloudflare)
+- [Layer-4](https://github.com/mholt/caddy-l4)
 
 # Architectures
 
