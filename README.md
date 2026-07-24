@@ -21,5 +21,12 @@ The final images are optimized for size. I use them to test network configuratio
 
 # Support
 
-Do not expect any support, in particular I won't add any additional Caddy plugin outside the one(s) already included.
+Do not expect any support, in particular I won't add any additional Caddy plugin outside the one(s) already included, see forking for additional customizations.
 Don't expect regular builds following the Caddy releases, however feel free to open an issue and tag me if you need a version bump, I'll do my best to follow up.
+
+# Forking
+
+To build the containers and artifacts after updates to the actions, dockerfile or to bump caddy's version:
+
+- commit and push any change: `git commit -am "UPD: dockerfile"`, `git push`
+- to trigger a rebuild via github actions you need to create a tag in the `vN.N.N*` format and push it, e.g.: `git tag v2.11.4`, `git push --tags`
