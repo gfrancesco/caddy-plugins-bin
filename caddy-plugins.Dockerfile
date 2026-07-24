@@ -50,7 +50,7 @@ RUN set -eux; \
     # tar x -z -f /tmp/xcaddy.tar.gz -C /usr/bin xcaddy; \
     # rm -f /tmp/xcaddy.tar.gz; \
     # chmod +x /usr/bin/xcaddy;
-    go install github.com/caddyserver/xcaddy/cmd/xcaddy@v${XCADDY_VERSION}
+    go install github.com/caddyserver/xcaddy/cmd/xcaddy@${XCADDY_VERSION}
 
 WORKDIR /usr/bin
 RUN xcaddy version

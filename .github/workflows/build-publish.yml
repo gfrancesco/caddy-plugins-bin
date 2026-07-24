@@ -21,13 +21,7 @@ jobs:
       artifact-name: build-caddy-bin
       sign: false
       platforms: >-
-        linux/amd64,
-        linux/arm64/v8,
-        linux/arm/v7,
-        linux/arm/v6,
-        linux/ppc64le,
-        linux/riscv64,
-        linux/s390x
+        linux/amd64
       file: caddy-plugins.Dockerfile
       build-args: |
         GO_IMAGE_VERSION=${{ vars.GO_IMAGE_VERSION }}
@@ -36,6 +30,7 @@ jobs:
         CADDY_VERSION=${{ vars.CADDY_VERSION }}
         # CADDY_VERSION=${{ github.ref_name }}
         CADDY_CF_DNS_VERSION=${{ vars.CADDY_CF_DNS_VERSION }}
+        CADDY_L4_VERSION=${{ vars.CADDY_L4_VERSION }}
 
   release:
     needs: build
@@ -63,4 +58,18 @@ jobs:
       with:
         files: |
           caddy-plugins-bin*
+        body: |
+          # Caddy: `${{ github.ref_name }}`
+          ## Plugins
+          - Cloudflare DNS @ ${{ vars.CADDY_CF_DNS_VERSION }}
+          - Layer 4 @ ${{ vars.CADDY_L4_VERSION }}
+
+          # Images
+          [Docker HUB: gfrancesco11/caddy-plugins](https://hub.docker.com/r/gfrancesco11/caddy-plugins/tags)
+
+          # Build and image dependencies
+          - `alpine:${{ vars.ALPINE_VERSION }}`
+          - `golang:${{ vars.GO_IMAGE_VERSION }}`
+          - `github.com/caddyserver/xcaddy:${{ vars.XCADDY_VERSION }}`
+
 
